@@ -1,0 +1,22 @@
+---
+jobs:
+- name: build
+  plan:
+  - get: aws-cli
+    trigger: true
+  - put: aws-cli-image
+    params: {build: aws-cli}
+
+resources:
+- name: aws-cli
+  type: git
+  source:
+    uri: {{git-uri}}
+    branch: {{git-branch}}
+
+- name: aws-cli-image
+  type: docker-image
+  source:
+    repository: {{docker-repository}}
+    username: {{docker-username}}
+    password: {{docker-password}}
